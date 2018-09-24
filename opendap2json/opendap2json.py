@@ -13,11 +13,8 @@ import matplotlib.colors
 import json
 import os
 
-dLon = 0.25
 
-dLat = 0.25
-
-url = "http://193.205.230.6:8080/opendap/hyrax/opendap/wrf5/d01/20180909Z00/wrfout_d01_2018-09-09_02%3A00%3A00.nc"
+url = "http://193.205.230.6:8080/opendap/hyrax/opendap/wrf5/d01/20180919Z00/wrfout_d01_2018-09-25_01%3A00%3A00.nc"
 
 splitted = url.split("/")
 
@@ -163,7 +160,43 @@ z = z.flatten()
 
 xi = np.linspace(minLon, maxLon, len(uvmet10[0][0]))
 
+dLon = [j-i for i, j in zip(xi[:-1], xi[1:])]
+
+temp = 0
+
+somma = 0
+
+count = len(xi)
+
+for i, j in zip(xi[:-1], xi[1:]):
+    
+    temp = j - i 
+    
+    somma = somma + temp
+    
+dLon = somma / count
+
+print(dLon)
+
+print("dLon: "+str(dLon))
+
 yi = np.linspace(minLat, maxLat, len(uvmet10[0]))
+
+temp = 0
+
+somma = 0
+
+count = len(yi)
+
+for i, j in zip(yi[:-1], yi[1:]):
+    
+    temp = j - i 
+    
+    somma = somma + temp
+    
+dLat = somma / count
+
+print("dLat: "+str(dLat))
 
 X, Y = np.meshgrid(xi, yi)
 
@@ -182,9 +215,6 @@ z = np.array(uvmet10[1])
 z = z.flatten()
 
 V10i = griddata((px,py),z, (X, Y),method='cubic')
-
-print(U10i)
-
 
 fig, ax = plt.subplots()
 
@@ -212,11 +242,11 @@ ncolsV = len(V10i[0])
 
 #creazione del file ascii grid
 
-pathAsciGridfile = ''
+pathAsciGrid = ''
 
-pathAsciGridfile = os.path.join(pathAsciGridfile,"asci_grid","asci_grid.grid")
+pathAsciGrid = os.path.join(pathAsciGrid,"asciGrid","asci_grid.grid")
 
-f = open(pathAsciGridfile,"w+")
+f = open(pathAsciGrid,"w+")
 
 f.write("DSAA\n")
 
@@ -258,114 +288,6 @@ plt.title('V component')
 #plt.savefig('interpolated.png',dpi=100)
 #plt.close(fig)
 
-'''result=[ {
-  "header": {
-    "discipline":0,
-    "disciplineName":"Meteorological products",
-    "gribEdition":2,
-    "gribLength":76420,
-    "center":7,
-    "centerName":"US National Weather Service - NCEP(WMC)",
-    "subcenter":0,
-    "refTime":data_ora,
-    "significanceOfRT":1,
-    "significanceOfRTName":"Start of forecast",
-    "productStatus":0,
-    "productStatusName":"Operational products",
-    "productType":1,
-    "productTypeName":"Forecast products",
-    "productDefinitionTemplate":0,
-    "productDefinitionTemplateName":"Analysis/forecast at horizontal level/layer at a point in time",
-    "parameterCategory":2,"parameterCategoryName":"Momentum",
-    "parameterNumber":2,
-    "parameterNumberName":"U-component_of_wind",
-    "parameterUnit":"m.s-1",
-    "genProcessType":2,
-    "genProcessTypeName":"Forecast",
-    "forecastTime":0,
-    "surface1Type":103,
-    "surface1TypeName":"Specified height level above ground",
-    "surface1Value":10.0,
-    "surface2Type":255,
-    "surface2TypeName":"Missing",
-    "surface2Value":0.0,
-    "gridDefinitionTemplate":0,
-    "gridDefinitionTemplateName":"Latitude_Longitude",
-    "numberPoints":65160,
-    "shape":6,
-    "shapeName":"Earth spherical with radius of 6,371,229.0 m",
-    "gridUnits":"degrees",
-    "resolution":48,
-    "winds":"true",
-    "scanMode":0,
-    "nx":nrows,
-    "ny":ncols,
-    "basicAngle":0,
-    "subDivisions":0,
-    "lo1":minLon,
-    "la1":maxLat,
-    "lo2":maxLon,
-    "la2":minLat,
-    "dx":dLon,
-    "dy":dLat },
-  "data": [
-            
-            
-  ]},{
-  "header": {
-    "discipline":0,
-    "disciplineName":"Meteorological products",
-    "gribEdition":2,
-    "gribLength":76420,
-    "center":7,
-    "centerName":"US National Weather Service - NCEP(WMC)",
-    "subcenter":0,
-    "refTime":data_ora,
-    "significanceOfRT":1,
-    "significanceOfRTName":"Start of forecast",
-    "productStatus":0,
-    "productStatusName":"Operational products",
-    "productType":1,
-    "productTypeName":"Forecast products",
-    "productDefinitionTemplate":0,
-    "productDefinitionTemplateName":"Analysis/forecast at horizontal level/layer at a point in time",
-    "parameterCategory":2,"parameterCategoryName":"Momentum",
-    "parameterNumber":2,
-    "parameterNumberName":"U-component_of_wind",
-    "parameterUnit":"m.s-1",
-    "genProcessType":2,
-    "genProcessTypeName":"Forecast",
-    "forecastTime":0,
-    "surface1Type":103,
-    "surface1TypeName":"Specified height level above ground",
-    "surface1Value":10.0,
-    "surface2Type":255,
-    "surface2TypeName":"Missing",
-    "surface2Value":0.0,
-    "gridDefinitionTemplate":0,
-    "gridDefinitionTemplateName":"Latitude_Longitude",
-    "numberPoints":65160,
-    "shape":6,
-    "shapeName":"Earth spherical with radius of 6,371,229.0 m",
-    "gridUnits":"degrees",
-    "resolution":48,
-    "winds":"true",
-    "scanMode":0,
-    "nx":nrowsV,
-    "ny":ncolsV,
-    "basicAngle":0,
-    "subDivisions":0,
-    "lo1":minLon,
-    "la1":maxLat,
-    "lo2":maxLon,
-    "la2":minLat,
-    "dx":dLon,
-    "dy":dLat },
-  "data": [
-            
-            
-  ]}
-]'''
 
 
 result = [
@@ -373,159 +295,119 @@ result = [
     {
     
         "header": {
+            
+            "parameterUnit": "m.s-1", 
+             
+             "parameterNumber": 2, 
+             
+             "dx": dLon, 
+             
+             "dy": dLat, 
+             
+             "parameterNumberName": "U-component_of_wind", 
+             
+             "la1": maxLat, 
+             
+             "la2": minLat, 
+             
+             "parameterCategory": 2, 
+             
+             "lo2": maxLon, 
+             
+             "nx": ncols, 
+             
+             "ny": nrows, 
+             
+             "refTime": data_ora, 
+             
+             "lo1": minLon    
+            
+            },
      
-        "discipline":0,
-        "disciplineName":"Meteorological products",
-        "gribEdition":2,
-        "gribLength":76420,
-        "center":7,
-        "centerName":"US National Weather Service - NCEP(WMC)",
-        "subcenter":0,
-        "refTime":data_ora,
-        "significanceOfRT":1,
-        "significanceOfRTName":"Start of forecast",
-        "productStatus":0,
-        "productStatusName":"Operational products",
-        "productType":1,
-        "productTypeName":"Forecast products",
-        "productDefinitionTemplate":0,
-        "productDefinitionTemplateName":"Analysis/forecast at horizontal level/layer at a point in time",
-        "parameterCategory":2,"parameterCategoryName":"Momentum",
-        "parameterNumber":2,
-        "parameterNumberName":"U-component_of_wind",
-        "parameterUnit":"m.s-1",
-        "genProcessType":2,
-        "genProcessTypeName":"Forecast",
-        "forecastTime":0,
-        "surface1Type":103,
-        "surface1TypeName":"Specified height level above ground",
-        "surface1Value":10.0,
-        "surface2Type":255,
-        "surface2TypeName":"Missing",
-        "surface2Value":0.0,
-        "gridDefinitionTemplate":0,
-        "gridDefinitionTemplateName":"Latitude_Longitude",
-        "numberPoints":ncols*nrows,
-        "shape":6,
-        "shapeName":"Earth spherical with radius of 6,371,229.0 m",
-        "gridUnits":"degrees",
-        "resolution":48,
-        "winds":"true",
-        "scanMode":0,
-            
-        "nx": ncols,
-        
-        "ny": nrows,
-    
-        "basicAngle":0,
-    
-        "subDivisions":0,
-            
-        "la1":Xmax,
-            
-        "la2":Xmin,
-            
-        "lo1":Ymin, 
-        
-        "lo2":Ymax,
-            
-        "dx": dLon,
-        
-        "dy": dLat,
-            
-    }, "data": []
+            "data": []
     
         
     },{
         
         "header": {
      
-            "discipline":0,
-            "disciplineName":"Meteorological products",
-            "gribEdition":2,
-            "gribLength":76420,
-            "center":7,
-            "centerName":"US National Weather Service - NCEP(WMC)",
-            "subcenter":0,
-            "refTime":data_ora,
-            "significanceOfRT":1,
-            "significanceOfRTName":"Start of forecast",
-            "productStatus":0,
-            "productStatusName":"Operational products",
-            "productType":1,
-            "productTypeName":"Forecast products",
-            "productDefinitionTemplate":0,
-            "productDefinitionTemplateName":"Analysis/forecast at horizontal level/layer at a point in time",
-            "parameterCategory":2,"parameterCategoryName":"Momentum",
-            "parameterNumber":3,
-            "parameterNumberName":"U-component_of_wind",
-            "parameterUnit":"m.s-1",
-            "genProcessType":2,
-            "genProcessTypeName":"Forecast",
-            "forecastTime":0,
-            "surface1Type":103,
-            "surface1TypeName":"Specified height level above ground",
-            "surface1Value":10.0,
-            "surface2Type":255,
-            "surface2TypeName":"Missing",
-            "surface2Value":0.0,
-            "gridDefinitionTemplate":0,
-            "gridDefinitionTemplateName":"Latitude_Longitude",
-            "numberPoints":ncols*nrows,
-            "shape":6,
-            "shapeName":"Earth spherical with radius of 6,371,229.0 m",
-            "gridUnits":"degrees",
-            "resolution":48,
-            "winds":"true",
-            "scanMode":0,
-            "nx": ncols,
+            "parameterUnit": "m.s-1", 
+             
+             "parameterNumber": 3, 
+             
+             "dx": dLon, 
+             
+             "dy": dLat, 
+             
+             "parameterNumberName": "U-component_of_wind", 
+             
+             "la1": maxLat, 
+             
+             "la2": minLat, 
+             
+             "parameterCategory": 2, 
+             
+             "lo2": maxLon, 
+             
+             "nx": ncols, 
+             
+             "ny": nrows, 
+             
+             "refTime": data_ora, 
+             
+             "lo1": minLon    
         
-            "ny": nrows,
-            "basicAngle":0,
-            "subDivisions":0,
-          
-            "la1":Xmax,
-            
-            "la2":Xmin,
-            
-            "lo1":Ymin, 
-        
-            "lo2":Ymax,
-            
-            "dx":dLon,
-            "dy":dLat    
-        
-        
-    
     }, "data": []
     
     }
 ]
 
-
+'''
 print("Min lat: "+str(minLat))
 print("Min lon: "+str(minLon))
 print("Max lat: "+str(maxLat))
 print("Max lon: "+str(maxLon))
 
-for i in range(0, nrows):
-    
-    for j in range(0, ncols):
+'''
 
+N = len(U10i) - 1 
+ 
+for i in xrange(N,-1,-1):
+    
+    for j in range(len(U10i[i])):
+        
         result[0]["data"].append(U10i[i][j])
 
-for i in range(0, nrowsV):
+M = len(V10i) - 1
+
+for i in xrange(M,-1,-1):
     
-    for j in range(0, ncolsV):
+    for j in range(len(V10i[i])):
 
         result[1]["data"].append(V10i[i][j])
+
+'''
+for i in range(0, len(U10i)):
+    
+    for j in range(0, len(U10i[i])):
+                   
+        result[0]["data"].append(U10i[i][j])
+                   
+for i in range(0, len(V10i)):
+                   
+    for j in range(0, len(V10i[i])):
+                   
+        result[1]["data"].append(V10i[i][j])'''
 
 pathJsonFile = ''
 
 pathJsonFile = os.path.join(pathJsonFile,"jsonWind","wind.json")
-        
+
 with open(pathJsonFile, 'w') as f:
 
     json.dump(result, f)
 
 f.close()
+
+
+# Modificato il 20/09/2018c alle ore 17:41
