@@ -516,7 +516,7 @@ for i in range(0, nrowsV):
         result[1]["data"].append(V10i[i][j])
 
 
-with open('/Applications/MAMP/htdocs/demo/wind.json', 'w') as f:
+with open('wind.json', 'w') as f:
 
     json.dump(result, f)
 
