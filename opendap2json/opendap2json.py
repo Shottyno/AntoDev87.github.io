@@ -11,6 +11,7 @@ import matplotlib.patches as mpatches
 from matplotlib import ticker, cm
 import matplotlib.colors
 import json
+import os
 
 dLon = 0.25
 
@@ -25,7 +26,7 @@ arr_data_ora = splitted[9].replace("%3A", ":").split("_")
 data_ora = arr_data_ora[2]+" "+arr_data_ora[3].replace(".nc", "")
 
 #ncfile = Dataset("http://193.205.230.6:8080/opendap/opendap/wrf5/d03/20180702Z00/wrfout_d03_2018-07-06_00%3A00%3A00.nc")
-ncfile = Dataset("http://193.205.230.6:8080/opendap/hyrax/opendap/wrf5/d01/20180909Z00/wrfout_d01_2018-09-09_02%3A00%3A00.nc")
+ncfile = Dataset("http://193.205.230.6:8080/opendap/hyrax/opendap/wrf5/d01/history/2018/09/09/wrf5_d01_20180909Z0200.nc")
 #ncfile = Dataset("http://193.205.230.6:8080/opendap/opendap/wrf5/d02/20180703Z00/wrfout_d02_2018-07-06_00%3A00%3A00.nc")
 
 Xlat = getvar(ncfile, "XLAT", timeidx=ALL_TIMES)
@@ -170,9 +171,9 @@ U10i = griddata((px,py),z, (X, Y),method='cubic')
 
 #print(U10i)
 
-xi = np.linspace(minLon, maxLon, len(uvmet10[1]))
+xi = np.linspace(minLon, maxLon, len(uvmet10[1][0]))
 
-yi = np.linspace(minLat, maxLat, len(uvmet10[1][0]))
+yi = np.linspace(minLat, maxLat, len(uvmet10[1]))
 
 X, Y = np.meshgrid(xi, yi)
 
@@ -211,7 +212,11 @@ ncolsV = len(V10i[0])
 
 #creazione del file ascii grid
 
-f = open("asci_grid.grid","w+")
+pathAsciGridfile = ''
+
+pathAsciGridfile = os.path.join(pathAsciGridfile,"asci_grid","asci_grid.grid")
+
+f = open(pathAsciGridfile,"w+")
 
 f.write("DSAA\n")
 
@@ -515,8 +520,11 @@ for i in range(0, nrowsV):
 
         result[1]["data"].append(V10i[i][j])
 
+pathJsonFile = ''
 
-with open('wind.json', 'w') as f:
+pathJsonFile = os.path.join(pathJsonFile,"jsonWind","wind.json")
+        
+with open(pathJsonFile, 'w') as f:
 
     json.dump(result, f)
 
