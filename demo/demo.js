@@ -41,7 +41,7 @@ var map = mapStuff.map;
 var layerControl = mapStuff.layerControl;
 
 
-$.getJSON('../opendap2json/jsonWind/wind.json', function (data) {
+$.getJSON('../opendap2json/jsonWind/windD01.json', function (data) {
 
 	var velocityLayer = L.velocityLayer({
 		displayValues: true,
@@ -54,7 +54,38 @@ $.getJSON('../opendap2json/jsonWind/wind.json', function (data) {
 		maxVelocity: 15
 	});
 
-	layerControl.addOverlay(velocityLayer, 'Wind - Custom');
+	layerControl.addOverlay(velocityLayer, 'Wind - D01');
 });
 
+$.getJSON('../opendap2json/jsonWind/windD02.json', function (data) {
+
+	var velocityLayer = L.velocityLayer({
+		displayValues: true,
+		displayOptions: {
+			velocityType: 'Global Wind',
+			displayPosition: 'bottomleft',
+			displayEmptyString: 'No wind data'
+		},
+		data: data,
+		maxVelocity: 15
+	});
+
+	layerControl.addOverlay(velocityLayer, 'Wind - D02');
+});
+
+$.getJSON('../opendap2json/jsonWind/windD03.json', function (data) {
+
+	var velocityLayer = L.velocityLayer({
+		displayValues: true,
+		displayOptions: {
+			velocityType: 'Global Wind',
+			displayPosition: 'bottomleft',
+			displayEmptyString: 'No wind data'
+		},
+		data: data,
+		maxVelocity: 15
+	});
+
+	layerControl.addOverlay(velocityLayer, 'Wind - D03');
+});
 

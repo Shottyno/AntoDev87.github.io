@@ -13,17 +13,20 @@ import matplotlib.colors
 import json
 import os
 
+#26_09_2018_01:00
 
-url = "http://193.205.230.6:8080/opendap/hyrax/opendap/wrf5/d01/20180919Z00/wrfout_d01_2018-09-25_01%3A00%3A00.nc"
+url = "http://193.205.230.6:8080/opendap/opendap/wrf5/d03/20180926Z00/wrfout_d03_2018-09-26_01:00:00.nc"
 
 splitted = url.split("/")
 
-arr_data_ora = splitted[9].replace("%3A", ":").split("_")
+#arr_data_ora = splitted[9].replace("%3A", ":").split("_")
+
+arr_data_ora = splitted[8].split("_")
 
 data_ora = arr_data_ora[2]+" "+arr_data_ora[3].replace(".nc", "")
 
 #ncfile = Dataset("http://193.205.230.6:8080/opendap/opendap/wrf5/d03/20180702Z00/wrfout_d03_2018-07-06_00%3A00%3A00.nc")
-ncfile = Dataset("http://193.205.230.6:8080/opendap/hyrax/opendap/wrf5/d01/history/2018/09/09/wrf5_d01_20180909Z0200.nc")
+ncfile = Dataset("http://193.205.230.6:8080/opendap/opendap/wrf5/d03/20180926Z00/wrfout_d03_2018-09-26_01:00:00.nc")
 #ncfile = Dataset("http://193.205.230.6:8080/opendap/opendap/wrf5/d02/20180703Z00/wrfout_d02_2018-07-06_00%3A00%3A00.nc")
 
 Xlat = getvar(ncfile, "XLAT", timeidx=ALL_TIMES)
@@ -401,7 +404,7 @@ for i in range(0, len(V10i)):
 
 pathJsonFile = ''
 
-pathJsonFile = os.path.join(pathJsonFile,"jsonWind","wind.json")
+pathJsonFile = os.path.join(pathJsonFile,"jsonWind","windD03.json")
 
 with open(pathJsonFile, 'w') as f:
 
