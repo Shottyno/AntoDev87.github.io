@@ -68,7 +68,7 @@ $.getJSON('../opendap2json/jsonWind/windD02.json', function (data) {
 		},
 		data: data,
 		maxVelocity: 15,
-		colorScale: ["#2468b4", "#3c9dc2", "#80cdc1", "#97daa8", "#c6e7b5", "#eef7d9", "#ffee9f", "#fcd97d", "#ffb664", "#fc964b", "#fa7034", "#f54020", "#ed2d1c", "#dc1820", "#b40023"]
+		colorScale: ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#c6e7b5", "#eef7d9", "#ffee9f", "#fcd97d", "#ffb664", "#fc964b", "#fa7034", "#f54020", "#ed2d1c", "#dc1820", "#b40023"]
 	});
 
 	layerControl.addOverlay(velocityLayer, 'Wind - D02');
