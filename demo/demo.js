@@ -67,7 +67,8 @@ $.getJSON('../opendap2json/jsonWind/windD02.json', function (data) {
 			displayEmptyString: 'No wind data'
 		},
 		data: data,
-		maxVelocity: 15
+		maxVelocity: 15,
+		colorScale: [#ffffff]     
 	});
 
 	layerControl.addOverlay(velocityLayer, 'Wind - D02');
