@@ -50,8 +50,7 @@ $.getJSON('../opendap2json/jsonWind/windD01.json', function (data) {
 			displayPosition: 'bottomleft',
 			displayEmptyString: 'No wind data'
 		},
-		data: data,
-		maxVelocity: 15
+		data: data
 	});
 
 	layerControl.addOverlay(velocityLayer, 'Wind - D01');
@@ -83,7 +82,6 @@ $.getJSON('../opendap2json/jsonWind/windD03.json', function (data) {
 			displayEmptyString: 'No wind data'
 		},
 		data: data,
-		maxVelocity: 15,
 		colorScale: ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]
 	});
 
