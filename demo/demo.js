@@ -67,11 +67,10 @@ $.getJSON('../opendap2json/jsonWind/windD02.json', function (data) {
 			displayEmptyString: 'No wind data'
 		},
 		data: data,
-		maxVelocity: 15,
-		colorScale: ["#CD30B7", "#FF5A00", "#FF6F00", "#FBD900", "#159C00", "#149800", "#0EBDEC", "#FFFFFF", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]
+		colorScale: ["#FFFFFF", "#26E1F8", "#0917C0", "#159A00", "#169E00", "#FF9300", "#C62F00", "#AB1C8F"]
 	});
 
-	layerControl.addOverlay(velocityLayer, 'Wind - D02');
+	layerControl.addOverlay(velocityLayer, 'Wind - D02 SCMU');
 });
 
 $.getJSON('../opendap2json/jsonWind/windD03.json', function (data) {
@@ -88,6 +87,6 @@ $.getJSON('../opendap2json/jsonWind/windD03.json', function (data) {
 		colorScale: ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"]
 	});
 
-	layerControl.addOverlay(velocityLayer, 'Wind - D03');
+	layerControl.addOverlay(velocityLayer, 'Wind - D03 SCW');
 });
 
