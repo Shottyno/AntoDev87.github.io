@@ -6,8 +6,8 @@ var sideMenu = false;
 
 var markers = [];
 
-if (window.location.host.substr(-10) == '.github.io' && window.location.protocol != 'https:') {
-    window.location.protocol = 'https:';
+if (window.location.host.substr(-10) == '.github.io' && window.location.protocol == 'https:') {
+    window.location.protocol = 'http:';
 }
 
 
