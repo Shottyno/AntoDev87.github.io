@@ -1,2 +1,4 @@
 theme: jekyll-theme-cayman
 url: "http://antodev87.github.io/"
+curl -s -I https://antodev87.github.io/index.html | grep Location
+Location: http://antodev87.github.io/index.html
