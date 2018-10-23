@@ -1,5 +1,176 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:600');
+
 body {
+    
     margin: 0px;
+}
+
+/**{
+    
+    font-family: 'Open Sans', sans-serif!important;
+    
+}*/
+
+.leaflet-control-geocoder-form > input {
+    
+        margin-bottom: 0px!important;
+    
+        box-shadow: inset 0 0px 0px rgba(0,0,0,0.075);!important; 
+    
+}
+
+#menu{
+    
+     cursor: pointer; 
+    
+    font-size:30px; 
+    
+    margin-left: 10px; 
+    
+    position: absolute; 
+    
+    z-index: 1000; 
+    
+    color:#f2f2f2;
+    
+
+}
+
+#lista_menu{
+    
+    margin-top: 55px;
+    
+}
+
+.leaflet-control-zoom-in, .leaflet-control-zoom-out{
+    
+        border-radius: 20px!important;
+    
+        margin-top: 5px!important;
+     
+}
+
+.leaflet-control-zoom{
+    
+    border: 0px solid rgba(0,0,0,0.2)!important;
+    
+}
+
+.sidenav {
+    
+    height: 100%;
+    
+    width: 0;
+    
+    position: absolute;
+    
+    z-index: 1001;
+    
+    float: right;
+    
+    background-color: whitesmoke;
+    
+    overflow-x: hidden;
+    
+    transition: 0.5s;
+ 
+        
+}
+
+.sidenav a {
+
+    padding: 8px 8px 8px 8px;
+    
+    text-decoration: none;
+    
+    font-size: 15px;
+    
+    color: #00293C;
+    
+    display: block;
+    
+    transition: 0.3s;
+    
+}
+
+.sidenav a:hover {
+    
+    color: #f1f1f1;
+    
+}
+
+.sidenav .closebtn {
+    
+    position: absolute;
+    
+    top: 0;
+    
+    right: 5px;
+    
+    font-size: 36px;
+    
+    padding: 0px;
+    
+}
+
+
+#distanza{
+        
+    transition: all ease-in-out .5s;
+    -webkit-transition: all ease-in-out .5s;
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    width: 350px;
+    /*margin-bottom: 70px;*/
+    display:none;
+    background-color: rgba(0,0,0,0.45);
+    text-align: center;
+    font-size: 14px;
+    color: white;
+    padding: 18px 10px 15px 10px;
+    z-index: 1000; 
+}
+
+.closing-x {
+
+    text-transform: none;
+    line-height: 1;
+    position: absolute;
+    cursor: pointer;
+    margin: 10px;
+    font-size: 40px;
+    right: -1em;
+    z-index: 10;
+    color: white;
+    background-color: #9D0300;
+    width: 1em;
+    height: 1em;
+    border-radius: 1em;
+    font-size: 28px;
+    margin-top: -20px;
+    right: -15px;
+}
+
+.leaflet-control-geocoder-icon{
+    
+        background-image: url(img/search.png)!important;
+}
+
+.leaflet-control-geocoder{
+            
+    padding:5px;
+        
+    border-radius: 20px!important;
+    
+    border: 0px!important;
+        
+}
+
+.leaflet-control-geocoder-icon{
+    
+    margin-right: 5px;
+    
 }
 
 #heading {
@@ -14,12 +185,155 @@ a {
 }
 
 #map {
+    
     position: absolute;
+    
     height: 100%;
+    
     width: 100%;
+
     background-color: #333;
+
 }
 
 .leaflet-canvas-layer {
+    
     opacity: 0.55;
+
 }
+
+.main_container{
+
+    padding: 10px;
+    
+    background-color: rgba(174,208,234,0.8);
+    
+    position: absolute;
+    
+    z-index: 800;
+    
+    float: left;
+        
+    margin-top: 60px;
+    
+    margin-left: 12px;
+
+    border-radius: 10px;
+
+}
+
+.domain_container{
+
+    padding: 10px;
+    
+    background-color: rgba(174,208,234,0.8);
+    
+    position: absolute;
+    
+    z-index: 800;
+    
+    float: left;
+        
+    margin-top: 315px;
+    
+    border-radius: 10px;
+    
+    margin-left: 11px;
+
+}
+
+.top_container {
+    
+    padding: 10px;
+    
+    background-color: rgba(174,208,234,1.0);
+    
+    position: relative;
+    
+    z-index: 800;
+    
+    height: 25px;
+
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.inner_container{
+    
+    background-color:rgba(174,208,234,0.8);
+         
+    padding: 10px;       
+    
+    text-align: center;
+        
+}
+
+#title{
+        
+    color: #2779aa;
+    
+    font-weight: bold;
+       
+    position: absolute;
+    
+    left: 5px;
+    
+    font-size:30px;
+    
+    cursor:pointer;
+    
+}
+
+.leaflet-sidebar-header{
+    
+    background-color: #2779aa;
+
+}
+
+.leaflet-sidebar-tabs>li.active, .leaflet-sidebar-tabs>ul>li.active{
+    
+        background-color: #2779aa;
+
+}
+
+.leaflet-sidebar-tabs>li.active, .leaflet-sidebar-tabs>ul>li.active > a > i{
+    
+    color: white!important;
+
+}
+
+.leaflet-top .leaflet-control{
+    
+    /*margin-top : 60px!important;*/
+    
+}
+
+#data_label, #ora_label, #label_sel_dom, #p_info{
+    
+    color: #2779aa;
+    
+    font-weight: bold;
+    
+    font-size: 15px;
+    
+}
+
+#ora_label{
+    
+    margin-top: 10px;
+    
+}
+
+#domainRefresh{
+    
+    display: block!important;
+    
+    margin-top: 10px;
+        
+    float: right;
+    
+}
+

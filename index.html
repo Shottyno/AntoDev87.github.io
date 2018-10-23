@@ -1,27 +1,499 @@
 <!-- https://github.com/danwild/leaflet-velocity -->
 
 <!doctype html>
+
 <html>
-<head>
-	<title>LeafletVelocity Demo</title>
-	<meta charset="utf-8">
-</head>
-<body>
 
-<div id="map"></div>
+    <head>
+	
+        <title>LeafletVelocity Demo</title>
+	
+        <meta charset="utf-8">
+        
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+        
+        <link rel="stylesheet" href="demo/css/jquery-ui.css">
+      
+        <script src="demo/js/jquery-3.3.1.js"></script>
+  
+        <script src="demo/js/jquery-ui.js"></script>
+        
+        <link rel="stylesheet" href="demo/css/bootstrap.min.css" >
+    
+        <script src="demo/js/bootstrap.min.js"></script>
+        
+        <link rel="stylesheet" href="https://npmcdn.com/leaflet@1.1.0/dist/leaflet.css" />
 
-<!--vendor-->
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-<link rel="stylesheet" href="https://npmcdn.com/leaflet@1.1.0/dist/leaflet.css" />
-<script src="https://npmcdn.com/leaflet@1.1.0/dist/leaflet.js"></script>
+        <script src="https://npmcdn.com/leaflet@1.1.0/dist/leaflet.js"></script>
 
-<!--leaflet-velocity-->
-<link rel="stylesheet" href="dist/leaflet-velocity.css" />
-<script src="dist/leaflet-velocity.js"></script>
+        <!--leaflet-velocity-->
 
-<!--demo-->
-<link rel="stylesheet" href="demo/demo.css" />
-<script src="demo/demo.js"></script>
+        <link rel="stylesheet" href="dist/leaflet-velocity.css" />
 
-</body>
+        <script src="dist/leaflet-velocity.js"></script>
+    
+        <script type="text/javascript" src="dist/Leaflet.Coordinates-0.1.5.min.js"></script>
+    
+        <link rel="stylesheet" href="dist/Leaflet.Coordinates-0.1.5.css"/>
+
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+        
+        <link rel="stylesheet" href="dist/leaflet-sidebar.min.css" />
+
+        <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    
+        <script src="dist/Leaflet.Graticule.js"></script>
+
+        <script src="dist/Leaflet.Geodesic.js"></script>
+        
+        <script src="dist/leaflet-sidebar.min.js"></script>
+        
+        
+    
+        
+    </head>
+    
+   
+
+    <body>
+        
+        <div id="sidebar" class="leaflet-sidebar collapsed">
+        <!-- Nav tabs -->
+        <div class="leaflet-sidebar-tabs">
+            <ul role="tablist">
+                <li><a href="#info" role="tab"><i style="margin-right: 4px; color:#2779aa;" class="fas fa-info-circle"></i></a></li>
+                <li><a href="#home" role="tab"><i style="margin-right: 4px; color:#2779aa;" class="far fa-calendar-alt"></i></a></li>
+                <li><a href="#profile" role="tab"><i style="margin-right: 4px; color:#2779aa;" class="fas fa-wind"></i></a></li>
+                <li><a href="#posizione" role="tab"><i style="margin-right: 4px; color:#2779aa;" class="fas fa-map-marker-alt"></i></a></li>
+               
+            </ul>
+<!--
+            <ul role="tablist">
+                <li><a href="https://github.com/nickpeihl/leaflet-sidebar-v2"><i class="fa fa-github"></i></a></li>
+            </ul>-->
+        </div>
+
+        <!-- Tab panes -->
+        <div class="leaflet-sidebar-content">
+            <div class="leaflet-sidebar-pane" id="home">
+                <h1 class="leaflet-sidebar-header">
+                    Data e ora
+                    <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+                </h1>
+                
+                <div style="padding:5px; margin-top:10px;">
+
+                 <label id="data_label" for="datepicker"> <i style="margin-left:5px;" class="far fa-calendar-alt"></i> Data: </label>
+        
+                <input class="form-control form-control-sm" type="text" id="datepicker">
+     
+                <label id="ora_label" for="dateSelector"><i style="margin-left:5px;" class="far fa-clock"></i> Ora: </label>
+        
+                <select class="form-control form-control-sm" id="dateSelector">
+   
+                    <option value="00">00:00<br>
+		    
+                    <option value="01">01:00<br>
+            
+                    <option value="02">02:00<br>
+            
+                    <option value="03">03:00<br>
+            
+                    <option value="04">04:00<br>
+            
+                    <option value="05">05:00<br>
+            
+                    <option value="06">06:00<br>
+            
+                    <option value="07">07:00<br>
+            
+                    <option value="08">08:00<br>
+            
+                    <option value="09">09:00<br>
+            
+                    <option value="10">10:00<br>
+            
+                    <option value="11">11:00<br>
+            
+                    <option value="12">12:00<br>
+            
+                    <option value="13">13:00<br>
+            
+                    <option value="14">14:00<br>
+            
+                    <option value="15">15:00<br>
+                
+                    <option value="16">16:00<br>
+                
+                    <option value="17">17:00<br>
+                    
+                    <option value="18">18:00<br>
+            
+                    <option value="19">19:00<br>
+                
+                    <option value="20">20:00<br>
+            
+                    <option value="21">21:00<br>
+            
+                    <option value="22">22:00<br>
+        
+                    <option value="23">23:00<br>
+
+                </select>
+        
+                <button type="button" class="ui-button ui-corner-all ui-widget" id="domainRefresh">Visualizza</button>
+                
+            </div>
+                
+            </div>
+            
+            <div class="leaflet-sidebar-pane" id="info">
+                <h1 class="leaflet-sidebar-header">
+                    Informazioni 
+                    <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+                </h1>
+
+                <div style="padding:5px; margin-top:10px;">
+
+                    <p id="p_info"> Data: <span id="_data"></span></p>
+                    
+                    <p id="p_info"> Ora: <span id="_ora"></span></p>
+
+                    <p id="p_info"> Area selezionata: <span id="geo"></span></p>
+                    
+                </div>
+                
+            </div>
+
+            <div class="leaflet-sidebar-pane" id="profile">
+                
+                <h1 class="leaflet-sidebar-header">
+                    Visualizza vento
+                    <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+                </h1>
+                
+<!--
+                  <label id="dateSelector" for="dateSelector">Seleziona dominio: </label>
+-->
+        
+                    <div style="padding:5px; margin-top:10px;">
+                        
+                    <select class="form-control form-control-sm" id="domainSelector">
+   
+                        <option value="1">Europa<br>
+		    
+                        <option value="2">Italia<br>
+            
+                        <option value="3">Campania<br>
+        
+                    </select>
+            
+                </div>
+                
+            </div>
+
+            <div class="leaflet-sidebar-pane" id="posizione">
+                
+                <h1 class="leaflet-sidebar-header">
+                    
+                    Localizzazione
+                    
+                <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+                
+                </h1>
+                
+                 <div style="padding:5px; margin-top:10px;">
+           
+                <a href="#" id="location" class="list-group-item"><i style="margin-right:5px;" class="fas fa-crosshairs"></i>Trova la mia posizione</a>
+            
+                </div>
+                     
+                </div>
+                
+            </div>
+           
+        </div>
+    
+  
+       <!-- <div id="mySidenav" class="sidenav">
+  
+            <div style="padding:5px; ">
+            
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  
+                <ul id="lista_menu" class="list-group">
+  
+                    <a href="#" id="location" class="list-group-item"><i style="margin-right:5px;" class="fas fa-crosshairs"></i>Trova la mia posizione</a>
+  
+                    <a href="#" id="distance" class="list-group-item"><i style="margin-right:5px;" class="fas fa-road"></i>Distanza e pianificazione</a>
+  
+                </ul>
+            
+            </div>
+            
+            <div style="padding:5px; ">
+            
+                <label id="data_label" for="datepicker"> <i style="margin-left:5px;" class="far fa-calendar-alt"></i> Data: </label>
+        
+                <input class="form-control form-control-sm" type="text" id="datepicker">
+     
+                <label id="ora_label" for="dateSelector"><i style="margin-left:5px;" class="far fa-clock"></i> Ora: </label>
+        
+                <select class="form-control form-control-sm" id="dateSelector">
+   
+                    <option value="00">00:00<br>
+		    
+                    <option value="01">01:00<br>
+            
+                    <option value="02">02:00<br>
+            
+                    <option value="03">03:00<br>
+            
+                    <option value="04">04:00<br>
+            
+                    <option value="05">05:00<br>
+            
+                    <option value="06">06:00<br>
+            
+                    <option value="07">07:00<br>
+            
+                    <option value="08">08:00<br>
+            
+                    <option value="09">09:00<br>
+            
+                    <option value="10">10:00<br>
+            
+                    <option value="11">11:00<br>
+            
+                    <option value="12">12:00<br>
+            
+                    <option value="13">13:00<br>
+            
+                    <option value="14">14:00<br>
+            
+                    <option value="15">15:00<br>
+                
+                    <option value="16">16:00<br>
+                
+                    <option value="17">17:00<br>
+                    
+                    <option value="18">18:00<br>
+            
+                    <option value="19">19:00<br>
+                
+                    <option value="20">20:00<br>
+            
+                    <option value="21">21:00<br>
+            
+                    <option value="22">22:00<br>
+        
+                    <option value="23">23:00<br>
+
+                </select>
+        
+                <button type="button" class="ui-button ui-corner-all ui-widget" id="domainRefresh">Visualizza</button>
+                
+            </div>
+                
+                <div style="padding:5px;">
+                
+                    <label id="dateSelector" for="dateSelector">Seleziona dominio: </label>
+        
+                    <select class="form-control form-control-sm" id="domainSelector">
+   
+                        <option value="1">Europa<br>
+		    
+                        <option value="2">Italia<br>
+            
+                        <option value="3">Campania<br>
+        
+                    </select>
+            
+                </div>
+                    
+            </div>-->
+         
+           <!-- <button type="button" class="ui-button ui-corner-all ui-widget" id="location">Seleziona</button>-->
+    
+
+
+<!-- Use any element to open the sidenav -->
+<span id="menu" onclick="openNav()">&#9776;</span>
+
+        <div id="map"></div>
+        
+      <!--  <div class="main_container">
+    
+            <label id="data_label" for="datepicker">Data: </label>
+        
+            <input class="form-control" type="text" id="datepicker">
+     
+            <label id="ora_label" for="dateSelector">Ora: </label>
+        
+            <select class="form-control" id="dateSelector">
+   
+                <option value="00">00:00<br>
+		    
+                <option value="01">01:00<br>
+            
+                <option value="02">02:00<br>
+            
+                <option value="03">03:00<br>
+            
+                <option value="04">04:00<br>
+            
+                <option value="05">05:00<br>
+            
+                <option value="06">06:00<br>
+            
+                <option value="07">07:00<br>
+            
+                <option value="08">08:00<br>
+            
+                <option value="09">09:00<br>
+            
+                <option value="10">10:00<br>
+            
+                <option value="11">11:00<br>
+            
+                <option value="12">12:00<br>
+            
+                <option value="13">13:00<br>
+            
+                <option value="14">14:00<br>
+            
+                <option value="15">15:00<br>
+                
+                <option value="16">16:00<br>
+                
+                <option value="17">17:00<br>
+                
+                <option value="18">18:00<br>
+            
+                <option value="19">19:00<br>
+                
+                <option value="20">20:00<br>
+            
+                <option value="21">21:00<br>
+            
+                <option value="22">22:00<br>
+        
+                <option value="23">23:00<br>
+
+            </select>
+        
+            <button type="button" class="ui-button ui-corner-all ui-widget" id="domainRefresh">Seleziona</button>
+         
+         
+    
+        </div>-->
+        
+     <!--   <div class="domain_container">
+            
+            <p id="label_sel_dom"> Seleziona un dominio: </p>
+            
+            <button type="button" class="ui-button ui-corner-all ui-widget" onClick="addToMap(1)">D01</button>
+         
+            <button type="button" class="ui-button ui-corner-all ui-widget" onClick="addToMap(2)">D02</button>
+            
+            <button type="button" class="ui-button ui-corner-all ui-widget" onClick="addToMap(3)">D03</button>
+            
+    
+        </div>
+        -->
+        <!--
+        <div id="distanza">  
+        
+        <div class="closing-x" onclick="hide()"><i class="far fa-times-circle"></i></div>  
+        
+        <div>Scegli due punti sulla mappa per misurare la distanza!</div>
+    
+        <div class="container">
+        
+            <div class="row">
+                
+                <div class="col-sm">
+      
+                    <p style="margin: 0px;"><br></p>
+                    <span>Punto 1</span>
+                    <span>Punto 2</span>
+                    <span style="margin-top:10px;">Distanza</span>
+                    
+                </div>
+    
+                <div class="col-sm">
+      
+                    <p style="margin: 0px;">Latitudine</p>
+                    <p style="margin: 0px;" id="lat1">--</p>
+                    <p style="margin: 0px;" id="lat_punto_2">--</p>
+                    <p  style="margin: 0px;" id="km">--</p>
+
+    
+                </div>
+    
+                <div class="col-sm">
+      
+                    <p style="margin: 0px;">Longitudine</p>
+                    <p  style="margin: 0px;" id="lng1">--</p>
+                    <p  style="margin: 0px;" id="lng_punto_2">--</p>
+    
+                </div>
+  
+            </div>
+            
+            <div class="row">
+    
+
+      
+            </div>
+            
+        </div>
+        
+    </div>-->
+        
+        <!--<div class="top_container">
+    
+            
+            
+                <p id="title" onclick="openNav()"> &#9776; </p>
+
+    
+        </div>-->
+        
+
+    </body>
+
+    <link rel="stylesheet" href="demo/demo.css" />
+        
+    <script src="demo/demo.js"></script>  
+    
+    <script>
+    
+        var currentdate = new Date(); 
+        
+        $("#datepicker").val(currentdate.getDate()+ "/"+ (currentdate.getMonth()+1) + "/"+ currentdate.getFullYear());
+    
+    </script>
+    
+    <script>
+  
+        $( function() {
+    $( "#datepicker" ).datepicker({
+        
+        dateFormat: 'dd/mm/yy',
+    
+        changeMonth: true,
+    
+        changeYear: true
+        
+    });
+  } );
+        
+                
+
+        
+    </script>
+
+    
+    
 </html>
