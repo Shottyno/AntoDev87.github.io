@@ -408,7 +408,7 @@ var currDate= data+"Z"+ora;
 
 getD01();
 
-test();
+//test();
 
 if(ora2 < 10){
     
