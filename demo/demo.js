@@ -752,13 +752,12 @@ function test(){
 
 
     $.ajax({
-    url: 'http://193.205.230.6/products/wrf5/forecast/d03/grib/json?date='+currDate,
+   
+        url: 'http://193.205.230.6/products/wrf5/forecast/d03/grib/json?date='+currDate,
  
-    // The name of the callback parameter, as specified by the YQL service
-    jsonp: "callback",
- 
-    // Tell jQuery we're expecting JSONP
-    dataType: "json",
+        // Tell jQuery we're expecting JSONP
+
+        dataType: "jsonp",
  
     
     // Work with the response
