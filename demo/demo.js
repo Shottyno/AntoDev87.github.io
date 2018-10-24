@@ -448,7 +448,7 @@ function getD01(){
     
     removeOverLayer();
     
-    $.getJSON('//193.205.230.6/products/wrf5/forecast/d01/grib/json?date='+currDate, function (data) {
+    $.getJSON('http://193.205.230.6/products/wrf5/forecast/d01/grib/json?date='+currDate, function (data) {
    
     var corner1 = L.latLng(data[0].header.la1, data[0].header.lo1),
 
