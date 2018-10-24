@@ -406,7 +406,7 @@ var currDate= data+"Z"+ora;
 
 //console.log("currDate: ", currDate);
 
-getD01();
+//getD01();
 
 if(ora2 < 10){
     
