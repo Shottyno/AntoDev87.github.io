@@ -406,7 +406,9 @@ var currDate= data+"Z"+ora;
 
 //console.log("currDate: ", currDate);
 
-//getD01();
+getD01();
+
+test();
 
 if(ora2 < 10){
     
@@ -742,3 +744,38 @@ function clearAll(){
             markers.length = 0
     
 }
+
+function test(){
+
+    console.log('http://193.205.230.6/products/wrf5/forecast/d03/grib/json?date='+currDate);
+
+
+
+    $.ajax({
+    url: 'http://193.205.230.6/products/wrf5/forecast/d03/grib/json?date='+currDate,
+ 
+    // The name of the callback parameter, as specified by the YQL service
+    jsonp: "callback",
+ 
+    // Tell jQuery we're expecting JSONP
+    dataType: "json",
+ 
+    
+    // Work with the response
+    success: function( response ) {
+        console.log( response ); // server response
+    },
+        
+         // Work with the response
+    error: function( response ) {
+        console.log( "error: "+JSON.stringify(response) ); // server response
+    }
+});
+    
+}
+
+function logResults(json){
+  console.log(json);
+}
+
+  
