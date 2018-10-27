@@ -55,27 +55,30 @@ function initDemoMap(){
 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 });
     
-    var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', 
-                                                  
-                                                  {
-	
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-});
+    var OpenStreetMap_BlackAndWhite = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, ' +
+        'AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+    });
+    
+//    var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', 
+//                                                  
+//                                                  {
+//	
+//        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+//});
 
     var layers = {
         "Dark Canvas": Esri_DarkGreyCanvas,
-        "Satellite": OpenStreetMap_Mapnik,
-        "Grey Canvas": OpenStreetMap_BlackAndWhite
+        "Satellite": OpenStreetMap_BlackAndWhite,
+        "Grey Canvas": OpenStreetMap_Mapnik
         
     };
 
     var map = L.map('map', {
         zoomControl: false,
-        layers: [ Esri_DarkGreyCanvas ]
+        layers: [ OpenStreetMap_BlackAndWhite ]
     });
 
-   
-			
     geocoder = L.Control.Geocoder.nominatim();
 			
         control = L.Control.geocoder({
@@ -132,7 +135,7 @@ function initDemoMap(){
         
         var mapZoom = map.getZoom();
      
-        console.log(D01+" - "+D02+" - "+D03);
+        //console.log(D01+" - "+D02+" - "+D03);
     
         if(mapZoom === zoomLevelD01 && !D01){
             
