@@ -68,8 +68,8 @@ function initDemoMap(){
 //});
 
     var layers = {
-        "Dark Canvas": Esri_DarkGreyCanvas,
         "Satellite": OpenStreetMap_BlackAndWhite,
+        "Dark Canvas": Esri_DarkGreyCanvas,
         "Grey Canvas": OpenStreetMap_Mapnik
         
     };
@@ -134,23 +134,43 @@ function initDemoMap(){
     map.on('zoomend', function() {
         
         var mapZoom = map.getZoom();
-     
-        //console.log(D01+" - "+D02+" - "+D03);
-    
-        if(mapZoom === zoomLevelD01 && !D01){
+        
+        var center = map.getCenter();
+        
+        console.log("center: ", zoomLevelD03);
+        
+        if(boundsD01 !== undefined){
+            
+             if(mapZoom <= zoomLevelD01 && test(boundsD01, center) && !D01){
+                     
+            $('#geo').html("Europa");
+            
+            $("#domainSelector").val("1");
             
             addToMap(1);
             
-        }else if(mapZoom === zoomLevelD02 && !D02){
-         
-            addToMap(2)
+        }else if(mapZoom >= zoomLevelD02 && test(boundsD02, center) && !D02){
             
-        }else if(mapZoom === zoomLevelD03 && !D03){
-         
-            addToMap(3)
+            $('#geo').html("Italia");
+            
+            $("#domainSelector").val("2");
+
+            addToMap(2);         
+            
+        }else if(mapZoom >= zoomLevelD03 && test(boundsD03, center) && !D03){
+            
+                $('#geo').html("Campania");
+
+                $("#domainSelector").val("3");
+
+                addToMap(3);
+        
+        }
             
         }
-         
+        
+       
+        
     });
    
     var layerControl = L.control.layers(layers, graticule);
@@ -450,8 +470,8 @@ $('#location').on('click', function () {
 function getD01(){
     
     removeOverLayer();
-    
-    $.getJSON('http://193.205.230.6/products/wrf5/forecast/d01/grib/json?date='+currDate, function (data) {
+        
+    $.getJSON('https://api.meteo.uniparthenope.it/products/wrf5/forecast/d01/grib/json?date='+currDate, function (data) {
    
     var corner1 = L.latLng(data[0].header.la1, data[0].header.lo1),
 
@@ -459,8 +479,8 @@ function getD01(){
 
         bounds = L.latLngBounds(corner1, corner2);
         
-        boundsD01 = bounds;
-
+        boundsD01 = bounds;       
+       
         var mid = middlePoint(Number(data[0].header.la1), Number(data[0].header.lo1), Number(data[0].header.la2), Number(data[0].header.lo2));
         
         layerD01 = L.velocityLayer({
@@ -469,7 +489,7 @@ function getD01(){
 		
             displayOptions: {
 			
-                velocityType: 'Vento dominiop D01',
+                velocityType: 'Velocità del vento dominio D01',
             
                 displayPosition: 'bottomleft',
 			
@@ -494,8 +514,6 @@ function getD01(){
         D01 = true;
         
         $('#geo').html("Europa");
-        
-        console.log("zoomLevelD01: ", zoomLevelD01);
 
         getD02();
 
@@ -505,7 +523,7 @@ function getD01(){
 
 function getD02(){
     
-    $.getJSON('http://193.205.230.6/products/wrf5/forecast/d02/grib/json?date='+currDate, function (data) {
+    $.getJSON('https://api.meteo.uniparthenope.it/products/wrf5/forecast/d02/grib/json?date='+currDate, function (data) {
    
     var corner1 = L.latLng(data[0].header.la1, data[0].header.lo1),
 
@@ -518,7 +536,7 @@ function getD02(){
     layerD02 = L.velocityLayer({
 		displayValues: true,
 		displayOptions: {
-			velocityType: 'Vento dominiop D02',
+			velocityType: 'Velocità del vento dominio D02',
             displayPosition: 'bottomleft',
 			displayEmptyString: 'No wind data'
 		},
@@ -529,9 +547,7 @@ function getD02(){
         //layerControl.addOverlay(layerD02, 'Wind - D02');
            
         zoomLevelD02 = map.getBoundsZoom(bounds, false, 0);
-        
-        console.log("zoomLevelD02: ", zoomLevelD02);
-        
+                
         getD03();
 
 });
@@ -540,7 +556,7 @@ function getD02(){
 
 function getD03(){
     
-    $.getJSON('http://193.205.230.6/products/wrf5/forecast/d03/grib/json?date='+currDate, function (data) {
+    $.getJSON('https://api.meteo.uniparthenope.it/products/wrf5/forecast/d03/grib/json?date='+currDate, function (data) {
    
     var corner1 = L.latLng(data[0].header.la1, data[0].header.lo1),
 
@@ -550,10 +566,11 @@ function getD03(){
         
         boundsD03 = bounds;
         
+        
     layerD03 = L.velocityLayer({
 		displayValues: true,
 		displayOptions: {
-			velocityType: 'Vento dominiop D03',
+			velocityType: 'Velocità del vento dominio D03',
             displayPosition: 'bottomleft',
 			displayEmptyString: 'No wind data'
 		},
@@ -564,9 +581,7 @@ function getD03(){
         //layerControl.addOverlay(layerD03, 'Wind - D03');
         
         zoomLevelD03 = map.getBoundsZoom(bounds, false, 0);
-        
-        console.log("zoomLevelD03: ", zoomLevelD03);
-        
+                
 });
     
 }
@@ -576,6 +591,70 @@ function parseDate(data){
     var split = data.split("/");
     
     return split[2]+""+split[1]+""+split[0];
+    
+}
+
+
+function centerInBound(bounds, center){
+    
+    console.log("boundsqw: ", bounds);
+     
+    console.log("southWest", bounds.getSouthWest());
+    
+    console.log("northEast", bounds.getNorthEast());
+    
+    console.log("northWest", bounds.getNorthWest());
+    
+    console.log("southEast", bounds.getSouthEast());
+ 
+    var southWest = bounds.getSouthWest();
+    
+    var northEast = bounds.getNorthEast();
+    
+    var northWest = bounds.getNorthWest();
+    
+    var southEast = bounds.getSouthEast();
+    
+    console.log(checkLat(center.lat, southWest.lat, southEast.lat, northWest.lat, northEast.lat));
+    console.log(checkLng(center.lng, southWest.lng, southEast.lng, northWest.lng, northEast.lng));
+    
+    if( checkLat(center.lat, southWest.lat, southEast.lat, northWest.lat, northEast.lat) && checkLng(center.lng, southWest.lng, southEast.lng, northWest.lng, northEast.lng) ){
+        
+        return true;
+        
+    }else{
+        
+        return false;
+        
+    }
+    
+}
+
+function checkLat(centerLat, southWestLat, southEastLat, northWestLat, northEastLat){
+    
+    if( (centerLat >= southWestLat) && (centerLat >= southEastLat) && (centerLat <= northWestLat) && (centerLat <= northEastLat) ){
+        
+        return true;
+        
+    }else{
+        
+        return false;
+        
+    }
+    
+}
+
+function checkLng(centerLng, southWestLng, southEastLng, northWestLng, northEastLng){
+    
+    if( (centerLng >= southWestLng) && (centerLng >= southEastLng) && (centerLng <= northWestLng) && (centerLng <= northEastLng) ){
+        
+        return true;
+        
+    }else{
+        
+        return false;
+        
+    }
     
 }
 
@@ -748,31 +827,82 @@ function clearAll(){
     
 }
 
-function test(){
-
-    console.log('http://193.205.230.6/products/wrf5/forecast/d03/grib/json?date='+currDate);
-
-
-
-    $.ajax({
-   
-        url: 'http://193.205.230.6/products/wrf5/forecast/d03/grib/json?date='+currDate,
- 
-        // Tell jQuery we're expecting JSONP
-
-        dataType: "jsonp",
- 
+function test(bounds, center){
     
-    // Work with the response
-    success: function( response ) {
-        console.log( response ); // server response
-    },
-        
-         // Work with the response
-    error: function( response ) {
-        console.log( "error: "+JSON.stringify(response) ); // server response
+  /*  console.log("southWest", bounds.getSouthWest());
+    
+    console.log("northEast", bounds.getNorthEast());
+    
+    console.log("northWest", bounds.getNorthWest());
+    
+    console.log("southEast", bounds.getSouthEast());
+    
+    var point = [center.lat, center.lng];
+    
+    var vs = [[bounds.getNorthWest().lat, bounds.getNorthWest().lng], [bounds.getNorthEast().lat, bounds.getNorthEast().lng], [bounds.getSouthWest().lat, bounds.getSouthWest().lng], [bounds.getSouthEast().lat, bounds.getSouthEast().lng]]
+    
+    var states = [{
+    "type": "Feature",
+    "properties": {"party": "Republican"},
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[
+            [bounds.getNorthWest().lat, bounds.getNorthWest().lng], [bounds.getNorthEast().lat, bounds.getNorthEast().lng], [bounds.getSouthWest().lat, bounds.getSouthWest().lng], [bounds.getSouthEast().lat, bounds.getSouthEast().lng]
+        ]]]
     }
-});
+        
+    }];*/
+    
+    var statesData = {"type":"FeatureCollection","features":[
+{"type":"Feature","id":"01","properties":{"name":"Alabama","density":94.65},"geometry":{"type":"Polygon","coordinates":[[[bounds.getNorthWest().lat, bounds.getNorthWest().lng],[bounds.getNorthEast().lat, bounds.getNorthEast().lng],[bounds.getSouthWest().lat, bounds.getSouthWest().lng],[bounds.getSouthEast().lat, bounds.getSouthEast().lng]]]}}
+]};
+    
+    var gjLayer = L.geoJSON(statesData);
+        
+    var results = leafletPip.pointInLayer([center.lat, center.lng], gjLayer);
+    
+    if(results.length > 0){
+    
+        return true;
+        
+    }else{
+        
+        return false;
+    }
+    
+    
+
+
+}
+
+/*function inside(point, vs) {
+    // ray-casting algorithm based on
+    // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+
+    var x = point[0], y = point[1];
+
+    var inside = false;
+    for (var i = 0, j = vs.length - 1; i < vs.length; j = i++) {
+        var xi = vs[i][0], yi = vs[i][1];
+        var xj = vs[j][0], yj = vs[j][1];
+
+        var intersect = ((yi > y) != (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+        if (intersect) inside = !inside;
+    }
+
+    return inside;
+};*/
+
+function inside(bounds, center){
+    
+    
+    var statesData = {"type":"FeatureCollection","features":[
+{"type":"Feature","id":"01","properties":{"name":"Alabama","density":94.65},"geometry":{"type":"Polygon","coordinates":[[[bounds.getNorthWest().lat, bounds.getNorthWest().lng],[bounds.getNorthEast().lat, bounds.getNorthEast().lng],[bounds.getSouthWest().lat, bounds.getSouthWest().lng],[bounds.getSouthEast().lat, bounds.getSouthEast().lng]]]}}
+]};
+    
+    var gjLayer = L.geoJSON(statesData);
+        
+    var results = leafletPip.pointInLayer([center.lat, center.lng], gjLayer);
     
 }
 
