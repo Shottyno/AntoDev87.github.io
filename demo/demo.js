@@ -76,28 +76,28 @@ function initDemoMap(){
         
     };
     
-    var t2 = L.tileLayer.wms('http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/'+dominio+'/history/2018/11/23/wrf5_d01_20181123Z1600.nc?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0', {
+    var t2 = L.tileLayer.wms('https://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/'+dominio+'/history/2018/11/23/wrf5_d01_20181123Z1600.nc?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0', {
     layers: 'T2',
          format: 'image/png',
     transparent: true,
         opacity : 0.8
 });
     
-    var th2 = L.tileLayer.wms('http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/'+dominio+'/history/2018/11/23/wrf5_d01_20181123Z1600.nc?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0', {
+    var th2 = L.tileLayer.wms('https://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/'+dominio+'/history/2018/11/23/wrf5_d01_20181123Z1600.nc?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0', {
     layers: 'TH2',
          format: 'image/png',
     transparent: true,
         opacity : 0.8
 });
 
-    var u10 = L.tileLayer.wms('http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/'+dominio+'/history/2018/11/23/wrf5_d01_20181123Z1600.nc?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0', {
+    var u10 = L.tileLayer.wms('https://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/'+dominio+'/history/2018/11/23/wrf5_d01_20181123Z1600.nc?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0', {
     layers: 'U10',
          format: 'image/png',
     transparent: true,
         opacity : 0.8
 });
     
-    var v10 = L.tileLayer.wms('http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/'+dominio+'/history/2018/11/23/wrf5_d01_20181123Z1600.nc?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0', {
+    var v10 = L.tileLayer.wms('https://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/'+dominio+'/history/2018/11/23/wrf5_d01_20181123Z1600.nc?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0', {
     layers: 'V10',
          format: 'image/png',
     transparent: true,
