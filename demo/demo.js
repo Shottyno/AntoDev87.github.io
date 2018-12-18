@@ -6,6 +6,8 @@ var sideMenu = false;
 
 var markers = [];
 
+var dominio = "d01";
+
 var current_position, current_accuracy;
 
 //-- Define radius function
@@ -73,7 +75,35 @@ function initDemoMap(){
         "Grey Canvas": OpenStreetMap_Mapnik
         
     };
+    
+    var t2 = L.tileLayer.wms('http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/'+dominio+'/history/2018/11/23/wrf5_d01_20181123Z1600.nc?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0', {
+    layers: 'T2',
+         format: 'image/png',
+    transparent: true,
+        opacity : 0.8
+});
+    
+    var th2 = L.tileLayer.wms('http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/'+dominio+'/history/2018/11/23/wrf5_d01_20181123Z1600.nc?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0', {
+    layers: 'TH2',
+         format: 'image/png',
+    transparent: true,
+        opacity : 0.8
+});
 
+    var u10 = L.tileLayer.wms('http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/'+dominio+'/history/2018/11/23/wrf5_d01_20181123Z1600.nc?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0', {
+    layers: 'U10',
+         format: 'image/png',
+    transparent: true,
+        opacity : 0.8
+});
+    
+    var v10 = L.tileLayer.wms('http://data.meteo.uniparthenope.it/ncWMS2/wms/lds/opendap/wrf5/'+dominio+'/history/2018/11/23/wrf5_d01_20181123Z1600.nc?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0', {
+    layers: 'V10',
+         format: 'image/png',
+    transparent: true,
+        opacity : 0.8
+});
+    
     var map = L.map('map', {
         zoomControl: false,
         layers: [ OpenStreetMap_BlackAndWhite ]
@@ -118,7 +148,12 @@ function initDemoMap(){
         
     var graticule = {
         
-        "Graticule": griglia
+        "Graticule": griglia,
+        "T2": t2,
+        "TH2": th2,
+        "U10": u10,
+        "V10": v10
+        
     
     };
     
@@ -513,6 +548,8 @@ function getD01(){
         
         D01 = true;
         
+        dominio = "d01";
+        
         $('#geo').html("Europa");
 
         getD02();
@@ -680,6 +717,8 @@ function addToMap(value){
             
             D01 = true;
             
+            dominio = "d01";
+            
             $('#geo').html("Europa");
             
             break;
@@ -691,6 +730,8 @@ function addToMap(value){
             map.fitBounds(boundsD02);
 
             D02 = true;
+            
+            dominio = "d02";
             
             $('#geo').html("Italia");
             
@@ -704,6 +745,8 @@ function addToMap(value){
 
             D03 = true;
             
+            dominio = "d03";
+            
             $('#geo').html("Campania");
             
             break;
@@ -715,7 +758,9 @@ function addToMap(value){
 }
 
 function removeOverLayer(){
-            
+    
+    dominio = "";
+    
     if(layerD01 !== undefined){
           
         layerD01.remove();
@@ -723,6 +768,8 @@ function removeOverLayer(){
         delete layerD01;
         
         D01 = false;
+        
+        
           
     }
     
@@ -733,7 +780,7 @@ function removeOverLayer(){
         delete layerD02;
         
         D02 = false;
-        
+                
     }
     
     if(layerD03 !== undefined){
@@ -743,7 +790,7 @@ function removeOverLayer(){
         delete layerD03;
         
         D03 = false;
-        
+                
     }
     
 }
